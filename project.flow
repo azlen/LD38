@@ -1,0 +1,25 @@
+{
+
+	project : {
+		name : 'LD38',
+		version : '0.0.1',
+		author : 'azlen',
+
+		app : {
+			name : 'LD38prep',
+			package : 'com.luxeengine.LD38prep'
+		},
+
+		build : {
+			dependencies : {
+				luxe : '*',
+			}
+		},
+
+		files : {
+			assets : 'assets/'
+		}
+
+	}
+
+}
