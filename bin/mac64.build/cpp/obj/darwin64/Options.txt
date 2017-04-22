@@ -1,4 +1,0 @@
-hxcpp=3.2.205
-hxcpp_api_level=321
-hxcpp_static_std=1
-hxcpp=/usr/local/Cellar/haxe/3.2.1/lib/haxe/lib/hxcpp/3,2,205/
