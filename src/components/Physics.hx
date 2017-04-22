@@ -29,33 +29,36 @@ class Physics extends Component {
 	}
 
 	override function update(dt:Float) {
-		velocity.y += gravity;
-		
-		if(collisionsEnabled && (velocity.x > 0 || velocity.y > 0)) {
+		if(collisionsEnabled) {
 			var collisiontime:Float = 1.0;
 			var normalx:Float = 0.0;
 			var normaly:Float = 0.0;
-			for(spr in C.space) {
-				if(this == spr) {
-					continue;
-				}
-				var broadphasebox = Util.GetSweptBroadphaseBox(this);
-				if(Util.AABBCheckWithBroadphaseBox(this, broadphasebox)) {
-					// trace('COLLIDING immenent');
-					var sweptAABB = Util.SweptAABB(this, spr);
-					
-					if(sweptAABB.time < collisiontime) {
-						collisiontime = sweptAABB.time;
-						normalx = sweptAABB.normalx;
-						normaly = sweptAABB.normaly;
+
+			if(velocity.x > 0 || velocity.y > 0) {
+				for(spr in C.space) {
+					if(this == spr) {
+						continue;
 					}
+					var broadphasebox = Util.GetSweptBroadphaseBox(this);
+					if(Util.AABBCheckWithBroadphaseBox(this, broadphasebox)) {
+						// trace('COLLIDING immenent');
+						var sweptAABB = Util.SweptAABB(this, spr);
+						
+						if(sweptAABB.time < collisiontime) {
+							collisiontime = sweptAABB.time;
+							normalx = sweptAABB.normalx;
+							normaly = sweptAABB.normaly;
+						}
+					}
+					
+					
 				}
-				
-				
+
+				pos.x += velocity.x * collisiontime;
+				pos.y += velocity.y * collisiontime;
 			}
 
-			pos.x += velocity.x * collisiontime;
-			pos.y += velocity.y * collisiontime;
+			velocity.y += gravity;
 
 			if(collisiontime != 1.0) {
 				var remainingtime:Float = 1.0 - collisiontime;

@@ -9,8 +9,6 @@ import components.Physics;
 
 class Player extends Sprite {
 
-	var physicsComponent:Physics;
-
 	public function new() {
 		super({
 			pos: new Vector(200, 0),
@@ -20,8 +18,8 @@ class Player extends Sprite {
 
 		centered = false;
 
-		physicsComponent = add(new Physics());
-		add(new PlatformerMovement(physicsComponent));
+		add(new Physics());
+		add(new PlatformerMovement());
 	}
 
 	override function init() {

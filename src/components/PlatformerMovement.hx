@@ -8,16 +8,15 @@ class PlatformerMovement extends Component {
 	public var speed = 4;
 	public var physicsComponent:Physics;
 
-	public function new(phys) {
+	public function new() {
 		super({
 			name: 'PlatformerMovement'
 		});
-		// physicsComponent = cast entity.get('Physics');
-		physicsComponent = phys;
 	}
 
 	override function init() {
 		add(new ConnectInput());
+		physicsComponent = cast get('Physics');
 	}
 
 	override function update(dt:Float) {
