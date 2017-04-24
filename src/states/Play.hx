@@ -3,12 +3,15 @@ import luxe.Input;
 import luxe.States;
 
 import entities.Player;
-import entities.Wall;
+import entities.Ground;
+import entities.Plant;
+import entities.EnemySpawner;
+import components.Gradient;
 
 import luxe.Vector;
 import luxe.Color;
 
-import C;
+import luxe.Sprite;
 
 class Play extends State {
 
@@ -16,14 +19,29 @@ class Play extends State {
 	// All callbacks from luxe.Game are also available here
 
 	var player: Player;
+	var ground: Ground;
+
+	var background: Sprite;
+
+	var enemySpawner: EnemySpawner;
+
+	var plant: Sprite;
 
 	override public function onenter<T> (_:T) {
-		player = new Player();
-		new Wall({
-			pos: new Vector(0, 500),
-			color: new Color().rgb(0x999999),
-			size: new Vector(1000, 10)
+		background = new Sprite({
+			pos: new Vector(0, 300),
+			size: new Vector(4000, 1000)
 		});
+		background.add(new Gradient(
+			new Color().rgb(0x45283c), // 76428a
+			new Color().rgb(0x639bff)
+		));
+
+		player = new Player();
+		ground = new Ground();
+		plant = new Plant();
+
+		enemySpawner = new EnemySpawner();
 	}
 
 	override public function update(dt: Float) {
@@ -32,6 +50,9 @@ class Play extends State {
 
 	override public function onleave<T> (_:T) {
 		player.destroy();
+		ground.destroy();
+		plant.destroy();
+		enemySpawner.destroy();
 	}
 
 	override function onmousemove( event: MouseEvent) {

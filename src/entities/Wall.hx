@@ -8,9 +8,7 @@ import components.Physics;
 
 class Wall extends Sprite {
 
-	public function new(pref) {
-		super(pref);
-
+	override function init() {
 		centered = false;
 
 		var physics = add(new Physics());

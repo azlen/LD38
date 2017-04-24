@@ -18,7 +18,10 @@ class ConnectInput extends Component {
 	    Luxe.input.bind_key('down', Key.down);
 	    Luxe.input.bind_key('down', Key.key_s);
 
+	    Luxe.input.bind_key('jump', Key.key_z);
 	    Luxe.input.bind_key('jump', Key.space);
+
+	    Luxe.input.bind_key('attack', Key.key_x);
 	}
 
 }

@@ -6,8 +6,8 @@
 		author : 'azlen',
 
 		app : {
-			name : 'LD38prep',
-			package : 'com.luxeengine.LD38prep'
+			name : 'LD38',
+			package : 'com.luxeengine.LD38'
 		},
 
 		build : {

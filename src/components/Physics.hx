@@ -9,10 +9,14 @@ import C;
 class Physics extends Component {
 
 	public var collisionsEnabled = true;
-	public var gravity = 2.5;
+	public var gravity = C.gravity;
 
 	public var velocity = new Vector(0.0, 0.0);
 	public var size : Vector;
+
+	public var touchingGround = false;
+
+	public var ignoreCollisionsWith: Array<String> = [];
 
 	var sprite : Sprite;
 
@@ -34,9 +38,9 @@ class Physics extends Component {
 			var normalx:Float = 0.0;
 			var normaly:Float = 0.0;
 
-			if(velocity.x > 0 || velocity.y > 0) {
+			if(velocity.x != 0 || velocity.y != 0) {
 				for(spr in C.space) {
-					if(this == spr) {
+					if(this == spr || ignoreCollisionsWith.indexOf(spr.entity.name) != -1) {
 						continue;
 					}
 					var broadphasebox = Util.GetSweptBroadphaseBox(this);
@@ -58,7 +62,15 @@ class Physics extends Component {
 				pos.y += velocity.y * collisiontime;
 			}
 
-			velocity.y += gravity;
+			if(normaly == -1.0) {
+				touchingGround = true;
+			}else if(velocity.y < 0) {
+				touchingGround = false;
+			}
+
+			if(touchingGround == false) {
+				velocity.y += gravity;
+			}
 
 			if(collisiontime != 1.0) {
 				var remainingtime:Float = 1.0 - collisiontime;
@@ -68,10 +80,14 @@ class Physics extends Component {
 			    velocity.x = dotprod * normaly;
 			    velocity.y = dotprod * normalx;
 			}
+		} else if(C.space.indexOf(this) != -1) {
+			C.space.remove(this);
 		}
 	}
 
 	public function destroy() {
-		C.space.remove(this);
+		if(C.space.indexOf(this) != -1) {
+			C.space.remove(this);
+		}
 	}
 }
